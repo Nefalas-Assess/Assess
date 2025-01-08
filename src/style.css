@@ -15,7 +15,7 @@
     background-color: #242424;
     border-right: 2px solid black;
     overflow-y: auto; /* Ajout du scroll vertical */
-  }
+}
   
   #menu button {
     display: block;

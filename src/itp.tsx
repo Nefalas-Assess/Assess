@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './test1.css';
+import './style.css';
 
 const Test1 = () => {
   const createRow = () => ({
@@ -11,7 +11,8 @@ const Test1 = () => {
     total: "",
   });
 
-  const [rows, setRows] = useState([createRow()]);
+  // Initialisation avec 5 lignes par défaut
+  const [rows, setRows] = useState(Array(5).fill(createRow()));
   const [category, setCategory] = useState("IT Personnelle");
 
   const calculateRow = (row) => {
