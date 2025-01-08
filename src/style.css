@@ -91,3 +91,13 @@
     cursor: pointer;
   }
   
+  .total-box {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #242424;
+    border: 1px solid black;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
