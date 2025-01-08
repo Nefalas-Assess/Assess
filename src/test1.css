@@ -1,12 +1,18 @@
 /* Styles pour le menu */
+
+.app {
+  display: flex;
+  height: 100%;
+}
+
 #menu {
-    position: fixed;
+    /* position: fixed;
     top: 0;
-    left: 0;
+    left: 0; */
     width: 200px;
+    min-width: 200px;
     height: 100%;
     background-color: #242424;
-    padding-top: 70px;
     border-right: 2px solid black;
     overflow-y: auto; /* Ajout du scroll vertical */
   }
@@ -28,16 +34,16 @@
   
   /* Contenu */
   #content {
-    margin-left: 220px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Commencer en haut de la page */
     align-items: center; /* Centrer horizontalement */
+    flex: 1;
   }
   
   #top-menu {
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     background-color: #242424;
     padding: 10px;
