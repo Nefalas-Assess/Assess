@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feuilles de Calcul</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Style pour le menu vertical */
+    #menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100%;
+      background-color: #f1f1f1;
+      padding-top: 20px;
+      border-right: 2px solid #ccc;
+    }
+
+    #menu button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      text-align: left;
+      border: none;
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+
+    #menu button:hover {
+      background-color: #ddd;
+    }
+
+    /* Style pour le contenu de la page */
+    #content {
+      margin-left: 220px; /* Décaler le contenu vers la droite pour laisser place au menu */
+      padding: 20px;
+    }
+
+    /* Style du bouton de sauvegarde et autres boutons */
+    #top-menu {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-bottom: 2px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #top-menu button, #loadFileInput {
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    #addRowButton {
+      margin-top: 10px;
+      padding: 5px 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu vertical -->
+  <div id="menu">
+    <button onclick="switchSheet('sheet1')">Feuille 1</button>
+    <button onclick="switchSheet('sheet2')">Feuille 2</button>
+    <button onclick="switchSheet('sheet3')">Feuille 3</button>
+    <button onclick="switchSheet('sheet4')">Feuille 4</button>
+    <button onclick="switchSheet('sheet5')">Feuille 5</button>
+    <button onclick="switchSheet('sheet6')">Feuille 6</button>
+    <button onclick="switchSheet('sheet7')">Feuille 7</button>
+    <button onclick="switchSheet('sheet8')">Feuille 8</button>
+    <button onclick="switchSheet('sheet9')">Feuille 9</button>
+    <button onclick="switchSheet('sheet10')">Feuille 10</button>
+  </div>
+
+  <!-- Contenu de la page -->
+  <div id="content">
+    <div id="top-menu">
+      <button id="saveButton">Sauvegarder</button>
+      <input type="file" id="loadFileInput" style="display:none;" />
+      <button id="loadButton">Charger</button>
+      <button id="resetButton">Réinitialiser</button>
+    </div>
+    <h1>Feuille de Calcul - IT Personnelle</h1>
+
+    <table id="itTable">
+      <thead>
+        <tr>
+          <th>Début</th>
+          <th>Fin</th>
+          <th>Jours</th>
+          <th>Indemnité Journalière (€)</th>
+          <th>%</th>
+          <th>Total (€)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="date" class="debut"></td>
+          <td><input type="date" class="fin"></td>
+          <td><input type="number" class="jours" readonly></td>
+          <td><input type="number" class="indemnite" step="0.01" value="32"></td>
+          <td><input type="number" class="pourcentage" step="0.01"></td>
+          <td><input type="number" class="total" readonly></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button id="addRowButton">+</button>
+  </div>
+
+  <script>
+    // Fonction de calcul pour chaque ligne
+    function calculateRow(row) {
+      const debutValue = row.querySelector('.debut').value;
+      const finValue = row.querySelector('.fin').value;
+      const joursField = row.querySelector('.jours');
+      const indemnite = parseFloat(row.querySelector('.indemnite').value) || 0;
+      const pourcentage = parseFloat(row.querySelector('.pourcentage').value) / 100 || 0;
+      const totalField = row.querySelector('.total');
+
+      // Vérifier si les dates 'Début' et 'Fin' sont valides
+      if (debutValue && finValue) {
+        const debut = new Date(debutValue);
+        const fin = new Date(finValue);
+
+        // Vérifier si les dates sont valides
+        if (!isNaN(debut.getTime()) && !isNaN(fin.getTime())) {
+          const jours = Math.max(0, (fin - debut) / (1000 * 60 * 60 * 24));
+          joursField.value = jours;
+          totalField.value = (jours * indemnite * pourcentage).toFixed(2);
+        } else {
+          joursField.value = '';
+          totalField.value = '';
+        }
+      } else {
+        joursField.value = '';
+        totalField.value = '';
+      }
+    }
+
+    // Fonction pour ajouter une nouvelle ligne
+    function addRow() {
+      const tableBody = document.querySelector('#itTable tbody');
+      const newRow = tableBody.rows[0].cloneNode(true); // Clone the first row
+      const inputs = newRow.querySelectorAll('input');
+      
+      // Réinitialiser les valeurs de la nouvelle ligne
+      inputs.forEach(input => {
+        if (input.classList.contains('indemnite')) {
+          input.value = '32'; // Valeur par défaut de l'indemnité
+        } else {
+          input.value = '';
+        }
+      });
+
+      // Mettre la date 'Début' de la nouvelle ligne au jour suivant la date 'Fin' de la ligne précédente
+      const lastRow = tableBody.rows[tableBody.rows.length - 1];
+      const lastFinDate = new Date(lastRow.querySelector('.fin').value);
+      if (!isNaN(lastFinDate.getTime())) {
+        lastFinDate.setDate(lastFinDate.getDate() + 1);
+        newRow.querySelector('.debut').value = lastFinDate.toISOString().split('T')[0]; // Formater la date
+      }
+
+      // Ajouter la nouvelle ligne à la table
+      tableBody.appendChild(newRow);
+
+      // Ajouter des écouteurs d'événements pour les nouveaux champs de la ligne
+      newRow.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', () => calculateRow(newRow));
+      });
+
+      // Focaliser sur le champ 'Début' pour encourager l'utilisateur à entrer une nouvelle date
+      newRow.querySelector('.debut').focus();
+
+      // Calculer pour la nouvelle ligne
+      calculateRow(newRow);
+    }
+
+    // Sauvegarder les données dans un fichier
+    function saveData() {
+      const rows = document.querySelectorAll('#itTable tbody tr');
+      const tableData = [];
+      rows.forEach(row => {
+        const rowData = {};
+        rowData.debut = row.querySelector('.debut').value;
+        rowData.fin = row.querySelector('.fin').value;
+        rowData.jours = row.querySelector('.jours').value;
+        rowData.indemnite = row.querySelector('.indemnite').value;
+        rowData.pourcentage = row.querySelector('.pourcentage').value;
+        rowData.total = row.querySelector('.total').value;
+        tableData.push(rowData);
+      });
+
+      // Convertir les données en JSON et créer un Blob
+      const json = JSON.stringify(tableData, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'feuille_de_calcul.json';
+      link.click();
+      alert('Les données ont été sauvegardées sur votre ordinateur.');
+    }
+
+    // Charger les données depuis un fichier
+    function loadData(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const tableData = JSON.parse(e.target.result);
+          const tableBody = document.querySelector('#itTable tbody');
+          tableBody.innerHTML = ''; // Effacer les lignes existantes
+          tableData.forEach(data => {
+            const newRow = tableBody.rows[0].cloneNode(true);
+            const inputs = newRow.querySelectorAll('input');
+            inputs[0].value = data.debut;
+            inputs[1].value = data.fin;
+            inputs[2].value = data.jours;
+            inputs[3].value = data.indemnite;
+            inputs[4].value = data.pourcentage;
+            inputs[5].value = data.total;
+            tableBody.appendChild(newRow);
+          });
+          alert('Les données ont été chargées depuis votre fichier.');
+        };
+        reader.readAsText(file);
+      }
+    }
+
+    // Réinitialiser les données
+    function resetData() {
+      if (confirm('Êtes-vous sûr de vouloir réinitialiser les données ?')) {
+        location.reload(); // Recharger la page pour réinitialiser
+      }
+    }
+
+    // Fonction pour changer de feuille de calcul (simule le changement avec alert)
+    function switchSheet(sheetId) {
+      alert('Changement vers ' + sheetId);
+    }
+
+    // Écouteurs d'événements pour les boutons du menu
+    document.getElementById('saveButton').addEventListener('click', saveData);
+    document.getElementById('loadButton').addEventListener('click', () => document.getElementById('loadFileInput').click());
+    document.getElementById('loadFileInput').addEventListener('change', loadData);
+    document.getElementById('resetButton').addEventListener('click', resetData);
+
+    // Écouteur pour le bouton "+" pour ajouter une nouvelle ligne
+    document.getElementById('addRowButton').addEventListener('click', addRow);
+
+    // Calcul initial pour la première ligne
+    document.querySelectorAll('.debut, .fin').forEach(input => {
+      input.addEventListener('input', function() {
+        const row = input.closest('tr');
+        calculateRow(row);
+      });
+    });
+
+    // Calcul du total lorsque les valeurs des champs changent
+    document.querySelectorAll('.indemnite, .pourcentage').forEach(input => {
+      input.addEventListener('input', function() {
+        const row = input.closest('tr');
+        calculateRow(row);
+      });
+    });
+
+    // Détecter la touche "Tab" pour ajouter une nouvelle ligne
+    document.querySelector('#itTable').addEventListener('keydown', function(event) {
+      if (event.key === "Tab") {
+        const activeElement = document.activeElement;
+        const isInLastCell = activeElement && activeElement.classList.contains('total');
+        const currentRow = activeElement.closest('tr');
+
+        // Si l'utilisateur est dans la dernière cellule de la ligne, ajouter une nouvelle ligne
+        if (isInLastCell && currentRow === document.querySelector('#itTable tbody tr:last-child')) {
+          event.preventDefault(); // Empêcher le comportement par défaut de la touche "Tab"
+          addRow(); // Ajouter une nouvelle ligne
+        }
+      }
+    });
+
+    // Calcul initial pour la première ligne
+    document.querySelectorAll('#itTable tbody tr').forEach(row => {
+      calculateRow(row);
+    });
+  </script>
+</body>
+</html>

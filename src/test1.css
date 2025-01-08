@@ -1,0 +1,71 @@
+#menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #f1f1f1;
+    padding-top: 20px;
+    border-right: 2px solid #ccc;
+  }
+  
+  #menu button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    text-align: left;
+    border: none;
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  #menu button:hover {
+    background-color: #ddd;
+  }
+  
+  #content {
+    margin-left: 220px;
+    padding: 20px;
+  }
+  
+  #top-menu {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #top-menu button, #loadFileInput {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  h1 {
+    margin-top: 0;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table, th, td {
+    border: 1px solid black;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
