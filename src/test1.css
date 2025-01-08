@@ -1,12 +1,14 @@
+/* Styles pour le menu */
 #menu {
     position: fixed;
     top: 0;
     left: 0;
     width: 200px;
     height: 100%;
-    background-color: #f1f1f1;
-    padding-top: 20px;
-    border-right: 2px solid #ccc;
+    background-color: #242424;
+    padding-top: 70px;
+    border-right: 2px solid black;
+    overflow-y: auto; /* Ajout du scroll vertical */
   }
   
   #menu button {
@@ -14,37 +16,50 @@
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    text-align: left;
+    text-align: left; /* Assurez-vous que le texte soit aligné à gauche */
     border: none;
-    background-color: #f1f1f1;
+    background-color: #242424;
     cursor: pointer;
   }
   
   #menu button:hover {
-    background-color: #ddd;
+    background-color: gray;
   }
   
+  /* Contenu */
   #content {
     margin-left: 220px;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Commencer en haut de la page */
+    align-items: center; /* Centrer horizontalement */
   }
   
   #top-menu {
-    background-color: #f1f1f1;
+    position: fixed;
+    top: 0;
+    background-color: #242424;
     padding: 10px;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid black;
     display: flex;
     justify-content: space-between;
+    left: 0; /* Fixe le top-menu à gauche de l'écran */
+    width: 100%; /* Prendre toute la largeur de l'écran */
+    z-index: 10; /* Placer le top-menu au-dessus des autres éléments */
+    justify-content: center; /* Centre les éléments horizontalement */
   }
   
-  #top-menu button, #loadFileInput {
+  #top-menu button,
+  #loadFileInput {
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
   }
   
   h1 {
-    margin-top: 0;
+    margin-top: 10;
+    text-align: center; /* Centrer le titre horizontalement */
   }
   
   table {
@@ -59,9 +74,10 @@
   
   th, td {
     padding: 8px;
-    text-align: left;
+    text-align: center;
   }
   
+  /* Style des boutons */
   button {
     margin-top: 10px;
     padding: 5px 10px;

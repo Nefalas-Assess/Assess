@@ -12,6 +12,7 @@ const Test1 = () => {
   });
 
   const [rows, setRows] = useState([createRow()]);
+  const [category, setCategory] = useState("IT Personnelle");
 
   const calculateRow = (row) => {
     const { debut, fin, indemnite, pourcentage } = row;
@@ -79,14 +80,29 @@ const Test1 = () => {
     setRows(updatedRows);
   };
 
+  const changeCategory = (newCategory) => {
+    setCategory(newCategory);
+  };
+
   return (
     <div className="app">
       <div id="menu">
-        {Array.from({ length: 10 }).map((_, index) => (
-          <button key={index} onClick={() => alert(`Changement vers Feuille ${index + 1}`)}>
-            Feuille {index + 1}
-          </button>
-        ))}
+        <button onClick={() => changeCategory("Incapacité Temporaire Personnelle")}>Incapacité Temporaire Personnelle</button>
+        <button onClick={() => changeCategory("Incapacité Temporaire Ménagère")}>Incapacité Temporaire Ménagère</button>
+        <button onClick={() => changeCategory("Incapacité Temporaire Économique")}>Incapacité Temporaire Économique</button>
+        <button onClick={() => changeCategory("Efforts Accrus")}>Efforts Accrus</button>
+        <button onClick={() => changeCategory("Hospitalisation")}>Hospitalisation</button>
+        <button onClick={() => changeCategory("Pretium Doloris")}>Pretium Doloris</button>
+        <button onClick={() => changeCategory("Préjudice Esthétique")}>Préjudice Esthétique</button>
+        <button onClick={() => changeCategory("Incapacité Permanente Personnelle Forfait")}>Incapacité Permanente Personnelle Forfait</button>
+        <button onClick={() => changeCategory("Incapacité Permanente Ménagère Forfait")}>Incapacité Permanente Ménagère Forfait</button>
+        <button onClick={() => changeCategory("Incapacité Permanente Économique Forfait")}>Incapacité Permanente Économique Forfait</button>
+        <button onClick={() => changeCategory("Incapacité Permanente Personnelle CAP")}>Incapacité Permanente Personnelle CAP</button>
+        <button onClick={() => changeCategory("Incapacité Permanente Ménagère CAP")}>Incapacité Permanente Ménagère CAP</button>
+        <button onClick={() => changeCategory("Incapacité Permanente Économique CAP")}>Incapacité Permanente Économique CAP</button>
+        <button onClick={() => changeCategory("Frais")}>Frais</button>
+        <button onClick={() => changeCategory("Provisions")}>Provisions</button>
+        <button onClick={() => changeCategory("Récapitulatif")}>Récapitulatif</button>
       </div>
 
       <div id="content">
@@ -97,7 +113,7 @@ const Test1 = () => {
           <button onClick={resetData}>Réinitialiser</button>
         </div>
 
-        <h1>Feuille de Calcul - IT Personnelle</h1>
+        <h1>{category}</h1>
 
         <table id="itTable">
           <thead>
@@ -105,7 +121,7 @@ const Test1 = () => {
               <th>Début</th>
               <th>Fin</th>
               <th>Jours</th>
-              <th>Indemnité Journalière (€)</th>
+              <th>Indemnité journalière (€)</th>
               <th>%</th>
               <th>Total (€)</th>
             </tr>
