@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import '../style.css';
+import { AppContext } from "../Provider";
 
 const ITP = () => {
+  const { data } = useContext(AppContext)
+
   // Fonction pour créer une nouvelle ligne avec des valeurs par défaut
   const createRow = () => ({
     debut: "",         // Date de début par défaut
@@ -47,7 +50,7 @@ const ITP = () => {
 
   // Fonction pour ajouter une nouvelle ligne dans le tableau
   const addRow = () => {
-    let newRow = createRow();
+    const newRow = createRow();
 
     // Si une ligne existe déjà, on utilise la date de fin de la dernière ligne pour calculer la nouvelle date de début
     if (rows.length > 0) {
@@ -88,21 +91,23 @@ const ITP = () => {
     }
   };
 
-// Fonction pour imprimer uniquement la section "main"
-const printMain = () => {
-  const mainContent = document.getElementById("main").innerHTML;
-  const originalContent = document.body.innerHTML;
+  // Fonction pour imprimer uniquement la section "main"
+  const printMain = () => {
+    const mainContent = document.getElementById("main").innerHTML;
+    const originalContent = document.body.innerHTML;
 
-  // Remplace temporairement le contenu de la page par le contenu de <div id="main">
-  document.body.innerHTML = mainContent;
+    // Remplace temporairement le contenu de la page par le contenu de <div id="main">
+    document.body.innerHTML = mainContent;
 
-  // Lance l'impression
-  window.print();
+    // Lance l'impression
+    window.print();
 
-  // Restaure le contenu original de la page
-  document.body.innerHTML = originalContent;
-  window.location.reload(); // Recharge la page pour restaurer l'état React
-};
+    // Restaure le contenu original de la page
+    document.body.innerHTML = originalContent;
+    window.location.reload(); // Recharge la page pour restaurer l'état React
+  };
+
+  console.log(data?.general_info?.date_consolidation)
 
   return (
       <div id="content">

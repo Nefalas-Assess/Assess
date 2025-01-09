@@ -2,10 +2,7 @@ import React, { createContext, useCallback, useState } from 'react';
 
 export const AppContext = createContext();
 
-const initial = {
-  expired: false,
-  selected: null,
-};
+const initial = {};
 
 const AppProvider = ({ children }) => {
   const [data, setData] = useState(initial);
