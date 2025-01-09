@@ -116,44 +116,44 @@ const ITP = () => {
           <button onClick={resetData}>Réinitialiser</button>
         </div>
 
-        <div id="main">
-
-          <h1>Incapacités temporaires personnelles</h1>
-
-          <table id="itpTable">
-            <thead>
-              <tr>
-                <th>Début</th>
-                <th>Fin</th>
-                <th>Jours</th>
-                <th>Indemnité journalière (€)</th>
-                <th>%</th>
-                <th>Total (€)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row, index) => (
-                <tr key={index}>
-                  <td><input type="date" value={row.debut} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
-                  <td><input type="date" value={row.fin} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
-                  <td><input type="number" value={row.jours} readOnly /></td>
-                  <td><input type="number" value={row.indemniteitp} step="0.01" onChange={(e) => handleInputChange(index, 'indemnite', parseFloat(e.target.value))} /></td>
-                  <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
-                  <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
+        <div id="main"></div>
+            <table id="itmTable">
+                <thead>
+                <tr>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Jours</th>
+                    <th>Indemnité journalière (€)</th>
+                    <th>Enfant(s)</th>
+                    <th>%</th>
+                    <th>Contribution (%)</th>
+                    <th>Total (€)</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                {rows.map((row, index) => (
+                    <tr key={index}>
+                    <td><input type="date" value={row.debut} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
+                    <td><input type="date" value={row.fin} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
+                    <td><input type="number" value={row.jours} readOnly /></td>
+                    <td><input type="number" value={row.indemniteitm} step="0.01" readOnly /></td>
+                    <td><input type="number" value={row.enfants} onChange={(e) => handleInputChange(index, 'enfants', parseInt(e.target.value) || 0)} /></td>
+                    <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
+                    <td><input type="number" value={row.contribution} step="0.01" onChange={(e) => handleInputChange(index, 'contribution', parseFloat(e.target.value))} /></td>
+                    <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
 
-          <button onClick={addRow}>+</button>
+            <button onClick={addRow}>+</button>
 
-          <div className="total-box">
-            <strong>Total : </strong> {getTotalSum()} €
-          </div>
+            <div className="total-box">
+                <strong>Total : </strong> {getTotalSum()} €
+            </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-export default ITP;
+    );
+  };
+  
+  export default ITP;
