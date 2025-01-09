@@ -99,9 +99,7 @@ const ITP = () => {
         <button type="button">Hospitalisation</button>
         <button type="button">Pretium Doloris</button>
         <button type="button">Préjudice Esthétique</button>
-        <button type="button">Incapacité Permanente Personnelle Forfait</button>
-        <button type="button">Incapacité Permanente Ménagère Forfait</button>
-        <button type="button">Incapacité Permanente Économique Forfait</button>
+        <button type="button">Incapacité Permanente Forfait</button>
         <button type="button">Incapacité Permanente Personnelle CAP</button>
         <button type="button">Incapacité Permanente Ménagère CAP</button>
         <button type="button">Incapacité Permanente Économique CAP</button>
