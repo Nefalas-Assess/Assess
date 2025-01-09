@@ -2,25 +2,30 @@ import React, { useState } from "react";
 import './style.css';
 
 const ITP = () => {
+  // Fonction pour créer une nouvelle ligne avec des valeurs par défaut
   const createRow = () => ({
-    debut: "",
-    fin: "",
-    jours: "",
-    indemnite: 32,
-    pourcentage: "",
-    total: "",
+    debut: "",         // Date de début par défaut
+    fin: "",           // Date de fin par défaut
+    jours: "",         // Nombre de jours calculé automatiquement
+    indemnite: "",     // Indemnité journalière par défaut
+    pourcentage: "",   // Pourcentage d'application
+    total: "",         // Total calculé automatiquement
   });
 
+  // Fonction appelée lorsqu'une touche est pressée dans un champ d'entrée
+  // Si la touche "Tab" est pressée sur la dernière ligne, une nouvelle ligne est ajoutée
   const handleKeyDown = (index, e) => {
     if (e.key === 'Tab' && index === rows.length - 1) {
-      e.preventDefault(); // Empêche le comportement par défaut de la touche Tab
+      e.preventDefault(); // Empêche le comportement par défaut de "Tab"
       addRow(); // Ajoute une nouvelle ligne
     }
   };
 
+  // État contenant la liste des lignes dans le tableau
+  // Initialement, il y a une seule ligne créée avec la fonction `createRow`
   const [rows, setRows] = useState([createRow()]);
-  const [category, setCategory] = useState("IT Personnelle");
 
+  // Fonction pour calculer le nombre de jours et le total pour une ligne donnée
   const calculateRow = (row) => {
     const { debut, fin, indemnite, pourcentage } = row;
     let jours = "";
@@ -30,69 +35,78 @@ const ITP = () => {
       const debutDate = new Date(debut);
       const finDate = new Date(fin);
       if (!isNaN(debutDate) && !isNaN(finDate)) {
+        // Calcul du nombre de jours entre les deux dates
         jours = Math.max(0, (finDate - debutDate) / (1000 * 60 * 60 * 24));
+        // Calcul du total basé sur les jours, indemnité et pourcentage
         total = (jours * indemnite * (pourcentage / 100)).toFixed(2);
       }
     }
     return { jours, total };
   };
 
+  // Fonction pour ajouter une nouvelle ligne dans le tableau
   const addRow = () => {
     let newRow = createRow();
 
+    // Si une ligne existe déjà, on utilise la date de fin de la dernière ligne pour calculer la nouvelle date de début
     if (rows.length > 0) {
       const lastRowFin = rows[rows.length - 1].fin;
       if (lastRowFin) {
         const finDate = new Date(lastRowFin);
         if (!isNaN(finDate)) {
-          finDate.setDate(finDate.getDate() + 1);
-          newRow.debut = finDate.toISOString().split('T')[0];
+          finDate.setDate(finDate.getDate() + 1); // Ajoute 1 jour à la date de fin précédente
+          newRow.debut = finDate.toISOString().split('T')[0]; // Formate la nouvelle date
         }
       }
     }
 
+    // Ajoute la nouvelle ligne à l'état `rows`
     setRows([...rows, newRow]);
   };
 
+  // Fonction pour gérer les changements dans les champs d'entrée
+  // Met à jour les valeurs dans l'état `rows` et recalcul le total
   const handleInputChange = (index, field, value) => {
     const updatedRows = [...rows];
-    updatedRows[index][field] = value;
-    const { jours, total } = calculateRow(updatedRows[index]);
+    updatedRows[index][field] = value; // Met à jour la valeur du champ modifié
+    const { jours, total } = calculateRow(updatedRows[index]); // Recalcule les champs dérivés
     updatedRows[index].jours = jours;
     updatedRows[index].total = total;
     setRows(updatedRows);
   };
 
+  // Fonction pour calculer la somme totale de tous les totaux dans le tableau
   const getTotalSum = () => {
     return rows.reduce((sum, row) => sum + (parseFloat(row.total) || 0), 0).toFixed(2);
   };
 
+  // Fonction pour réinitialiser les données (après confirmation de l'utilisateur)
   const resetData = () => {
     if (window.confirm('Êtes-vous sûr de vouloir réinitialiser les données ?')) {
-      setRows([createRow()]); // Réinitialiser les lignes à une seule ligne vide
+      setRows([createRow()]); // Réinitialise avec une seule ligne vide
     }
   };
 
   return (
     <div className="app">
       <div id="menu">
-        <button onClick={() => setCategory("Informations générales")}>Informations générales</button>
-        <button onClick={() => setCategory("Incapacité Temporaire Personnelle")}>Incapacité Temporaire Personnelle</button>
-        <button onClick={() => setCategory("Incapacité Temporaire Ménagère")}>Incapacité Temporaire Ménagère</button>
-        <button onClick={() => setCategory("Incapacité Temporaire Économique")}>Incapacité Temporaire Économique</button>
-        <button onClick={() => setCategory("Efforts Accrus")}>Efforts Accrus</button>
-        <button onClick={() => setCategory("Hospitalisation")}>Hospitalisation</button>
-        <button onClick={() => setCategory("Pretium Doloris")}>Pretium Doloris</button>
-        <button onClick={() => setCategory("Préjudice Esthétique")}>Préjudice Esthétique</button>
-        <button onClick={() => setCategory("Incapacité Permanente Personnelle Forfait")}>Incapacité Permanente Personnelle Forfait</button>
-        <button onClick={() => setCategory("Incapacité Permanente Ménagère Forfait")}>Incapacité Permanente Ménagère Forfait</button>
-        <button onClick={() => setCategory("Incapacité Permanente Économique Forfait")}>Incapacité Permanente Économique Forfait</button>
-        <button onClick={() => setCategory("Incapacité Permanente Personnelle CAP")}>Incapacité Permanente Personnelle CAP</button>
-        <button onClick={() => setCategory("Incapacité Permanente Ménagère CAP")}>Incapacité Permanente Ménagère CAP</button>
-        <button onClick={() => setCategory("Incapacité Permanente Économique CAP")}>Incapacité Permanente Économique CAP</button>
-        <button onClick={() => setCategory("Frais")}>Frais</button>
-        <button onClick={() => setCategory("Provisions")}>Provisions</button>
-        <button onClick={() => setCategory("Récapitulatif")}>Récapitulatif</button>
+        <button type="button">Informations générales</button>
+        <button type="button">Incapacité Temporaire Personnelle</button>
+        <button type="button">Incapacité Temporaire Ménagère</button>
+        <button type="button">Incapacité Temporaire Économique</button>
+        <button type="button">Efforts Accrus</button>
+        <button type="button">Hospitalisation</button>
+        <button type="button">Pretium Doloris</button>
+        <button type="button">Préjudice Esthétique</button>
+        <button type="button">Incapacité Permanente Personnelle Forfait</button>
+        <button type="button">Incapacité Permanente Ménagère Forfait</button>
+        <button type="button">Incapacité Permanente Économique Forfait</button>
+        <button type="button">Incapacité Permanente Personnelle CAP</button>
+        <button type="button">Incapacité Permanente Ménagère CAP</button>
+        <button type="button">Incapacité Permanente Économique CAP</button>
+        <button type="button">Frais</button>
+        <button type="button">Provisions</button>
+        <button type="button">Récapitulatif</button>
       </div>
 
       <div id="content">
@@ -145,9 +159,9 @@ const ITP = () => {
               <th>Fin</th>
               <th>Jours</th>
               <th>Indemnité journalière (€)</th>
-              <th>Enfant(s)</th> {/* New column for children */}
+              <th>Enfant(s)</th>
               <th>%</th>
-              <th>Contribution (%)</th> {/* New column for contribution */}
+              <th>Contribution (%)</th>
               <th>Total (€)</th>
             </tr>
           </thead>
