@@ -99,33 +99,61 @@ const ITP = () => {
 
         <div id="main">
 
-          <h1>Incapacités permanentes</h1>
+          <h1>Informations générales</h1>
 
-          <table id="ipTable">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Âge consolidation</th>
-                <th>Points</th>
-                <th>%</th>
-                <th>Total (€)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row, index) => (
-                <tr key={index}>
-                    <td>Personnelle</td>
-                  <td><input type="date" value={row.age} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
-                  <td><input type="date" value={row.points} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
-                  <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
-                  <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
-                </tr>
-              ))}
-            </tbody>
+          <table id="infogTable">
+                        <body>
+                    <table>
+                    <tr>
+                        <td>Date de création/màj</td>
+                        <td><input type="date" name="creation_maj_date" /></td>
+                    </tr>
+                    <tr>
+                        <td>Référence du dossier</td>
+                        <td><input type="text" name="reference_dossier" size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td>Nom de la victime</td>
+                        <td><input type="text" name="nom_victime" size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td>Date de l'accident</td>
+                        <td><input type="date" name="date_accident" /></td>
+                    </tr>
+                    <tr>
+                        <td>Date de naissance</td>
+                        <td><input type="date" name="date_naissance" /></td>
+                    </tr>
+                    <tr>
+                        <td>Date de consolidation</td>
+                        <td><input type="date" name="date_consolidation" /></td>
+                    </tr>
+                    <tr>
+                        <td>Statut</td>
+                        <td>
+                            <select name="statut">
+                                <option value="marié">Marié</option>
+                                <option value="célibataire">Célibataire</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Profession</td>
+                        <td>
+                            <select name="profession">
+                                <option value="employe">Employé</option>
+                                <option value="ouvrier">Ouvrier</option>
+                                <option value="sans_emploi">Sans emploi</option>
+                                <option value="retraite">Retraité</option>
+                                <option value="independant">Indépendant</option>
+                                <option value="fonctionnaire">Fonctionnaire</option>
+                                <option value="invalide">Invalide</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </body>
           </table>
-          <div className="total-box">
-            <strong>Total : </strong> {getTotalSum()} €
-          </div>
         </div>
       </div>
   );
