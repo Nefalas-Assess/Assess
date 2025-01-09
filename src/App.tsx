@@ -5,6 +5,7 @@ import ITM from './pages/itm.tsx'
 import ITP from './pages/itp.tsx'
 import INFOG from './pages/infog.tsx'
 import { BrowserRouter, NavLink, Outlet, Route, Routes } from 'react-router'
+import AppProvider from './Provider.tsx'
 
 const Layout = () => {
   return (
@@ -31,20 +32,24 @@ const Layout = () => {
   )
 }
 
+
 function App() {
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<INFOG />} />
-          <Route path="ip" element={<IP />} />
-          <Route path="effa" element={<EFFA />} />
-          <Route path="itm" element={<ITM />} />
-          <Route path="infog" element={<INFOG />} />
-          <Route path="itp" element={<ITP />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AppProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<INFOG />} />
+            <Route path="ip" element={<IP />} />
+            <Route path="effa" element={<EFFA />} />
+            <Route path="itm" element={<ITM />} />
+            <Route path="infog" element={<INFOG />} />
+            <Route path="itp" element={<ITP />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AppProvider>
   )
 }
 
