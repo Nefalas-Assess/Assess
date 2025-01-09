@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './style.css';
+import '../style.css';
 
 const ITP = () => {
   // Fonction pour créer une nouvelle ligne avec des valeurs par défaut
@@ -47,7 +47,7 @@ const ITP = () => {
 
   // Fonction pour ajouter une nouvelle ligne dans le tableau
   const addRow = () => {
-    let newRow = createRow();
+    const newRow = createRow();
 
     // Si une ligne existe déjà, on utilise la date de fin de la dernière ligne pour calculer la nouvelle date de début
     if (rows.length > 0) {
@@ -89,24 +89,7 @@ const ITP = () => {
   };
 
   return (
-    <div className="app">
-      <div id="menu">
-        <button type="button">Informations générales</button>
-        <button type="button">Incapacité Temporaire Personnelle</button>
-        <button type="button">Incapacité Temporaire Ménagère</button>
-        <button type="button">Incapacité Temporaire Économique</button>
-        <button type="button">Efforts Accrus</button>
-        <button type="button">Hospitalisation</button>
-        <button type="button">Pretium Doloris</button>
-        <button type="button">Préjudice Esthétique</button>
-        <button type="button">Incapacité Permanente Forfait</button>
-        <button type="button">Incapacité Permanente Personnelle CAP</button>
-        <button type="button">Incapacité Permanente Ménagère CAP</button>
-        <button type="button">Incapacité Permanente Économique CAP</button>
-        <button type="button">Frais</button>
-        <button type="button">Provisions</button>
-        <button type="button">Récapitulatif</button>
-      </div>
+   
 
       <div id="content">
         <div id="top-menu">
@@ -117,9 +100,10 @@ const ITP = () => {
         </div>
 
         <div id="main">
-          <h1>Efforts accrus</h1>
 
-          <table id="effaTable">
+          <h1>Incapacités temporaires personnelles</h1>
+
+          <table id="itpTable">
             <thead>
               <tr>
                 <th>Début</th>
@@ -127,7 +111,6 @@ const ITP = () => {
                 <th>Jours</th>
                 <th>Indemnité journalière (€)</th>
                 <th>%</th>
-                <th>Coefficient</th>
                 <th>Total (€)</th>
               </tr>
             </thead>
@@ -137,15 +120,8 @@ const ITP = () => {
                   <td><input type="date" value={row.debut} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
                   <td><input type="date" value={row.fin} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
                   <td><input type="number" value={row.jours} readOnly /></td>
-                  <td><input type="number" value={row.indemnite} step="0.01" onChange={(e) => handleInputChange(index, 'indemnite', parseFloat(e.target.value))} /></td>
+                  <td><input type="number" value={row.indemniteitp} step="0.01" onChange={(e) => handleInputChange(index, 'indemnite', parseFloat(e.target.value))} /></td>
                   <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
-                  <td>
-                    <select value={row.coefficient} onChange={(e) => handleInputChange(index, 'coefficient', e.target.value)}>
-                      {["1/7", "2/7", "3/7", "4/7", "5/7", "6/7", "7/7"].map((coeff) => (
-                        <option key={coeff} value={coeff}>{coeff}</option>
-                      ))}
-                    </select>
-                  </td>
                   <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
                 </tr>
               ))}
@@ -158,12 +134,7 @@ const ITP = () => {
             <strong>Total : </strong> {getTotalSum()} €
           </div>
         </div>
-        
-
-
-
       </div>
-    </div>
   );
 };
 

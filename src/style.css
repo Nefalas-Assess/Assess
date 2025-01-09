@@ -5,29 +5,27 @@
   height: 100%;
 }
 
-#menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 200px;
-    min-width: 200px;
-    height: 100%;
-    background-color: #242424;
-    border-right: 2px solid black;
-    overflow-y: auto; /* Ajout du scroll vertical */
-}
-  
-  #menu button {
+.layout-menu {
+  width: 200px;
+  min-width: 200px;
+  border-right: 2px solid black;
+  overflow-y: auto;
+
+  a {
     display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    text-align: left; /* Assurez-vous que le texte soit aligné à gauche */
-    border: none;
+    text-align: left;
+    margin: 10px;
+    padding: 5px;
     background-color: #242424;
-    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    &:hover{
+      background-color: gray;
+    }
   }
-  
+}
+
+
   #menu button:hover {
     background-color: gray;
   }
@@ -39,7 +37,6 @@
     flex-direction: column;
     justify-content: flex-start; /* Commencer en haut de la page */
     flex: 1;
-    padding-left: 220px;
   }
   
   #top-menu {

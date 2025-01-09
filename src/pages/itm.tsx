@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import './style.css';
+import '../style.css';
 
-const ITP = () => {
+const ITM = () => {
   // Fonction pour créer une nouvelle ligne avec des valeurs par défaut
   const createRow = () => ({
     debut: "",         // Date de début par défaut
@@ -47,7 +47,7 @@ const ITP = () => {
 
   // Fonction pour ajouter une nouvelle ligne dans le tableau
   const addRow = () => {
-    let newRow = createRow();
+    const newRow = createRow();
 
     // Si une ligne existe déjà, on utilise la date de fin de la dernière ligne pour calculer la nouvelle date de début
     if (rows.length > 0) {
@@ -89,24 +89,7 @@ const ITP = () => {
   };
 
   return (
-    <div className="app">
-      <div id="menu">
-        <button type="button">Informations générales</button>
-        <button type="button">Incapacité Temporaire Personnelle</button>
-        <button type="button">Incapacité Temporaire Ménagère</button>
-        <button type="button">Incapacité Temporaire Économique</button>
-        <button type="button">Efforts Accrus</button>
-        <button type="button">Hospitalisation</button>
-        <button type="button">Pretium Doloris</button>
-        <button type="button">Préjudice Esthétique</button>
-        <button type="button">Incapacité Permanente Forfait</button>
-        <button type="button">Incapacité Permanente Personnelle CAP</button>
-        <button type="button">Incapacité Permanente Ménagère CAP</button>
-        <button type="button">Incapacité Permanente Économique CAP</button>
-        <button type="button">Frais</button>
-        <button type="button">Provisions</button>
-        <button type="button">Récapitulatif</button>
-      </div>
+   
 
       <div id="content">
         <div id="top-menu">
@@ -152,8 +135,7 @@ const ITP = () => {
                 <strong>Total : </strong> {getTotalSum()} €
             </div>
         </div>
-      </div>
     );
   };
   
-  export default ITP;
+  export default ITM;
