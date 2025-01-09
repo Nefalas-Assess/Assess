@@ -88,6 +88,22 @@ const ITP = () => {
     }
   };
 
+// Fonction pour imprimer uniquement la section "main"
+const printMain = () => {
+  const mainContent = document.getElementById("main").innerHTML;
+  const originalContent = document.body.innerHTML;
+
+  // Remplace temporairement le contenu de la page par le contenu de <div id="main">
+  document.body.innerHTML = mainContent;
+
+  // Lance l'impression
+  window.print();
+
+  // Restaure le contenu original de la page
+  document.body.innerHTML = originalContent;
+  window.location.reload(); // Recharge la page pour restaurer l'état React
+};
+
   return (
       <div id="content">
         <div id="top-menu">
@@ -95,16 +111,16 @@ const ITP = () => {
           <input type="file" id="loadFileInput" style={{ display: 'none' }} onChange={() => { /* loadData logic */ }} />
           <button onClick={() => document.getElementById('loadFileInput').click()}>Charger</button>
           <button onClick={resetData}>Réinitialiser</button>
+          <button onClick={printMain}>Imprimer</button>
         </div>
 
         <div id="main">
 
-          <h1>Incapacités permanentes</h1>
+          <h1>Incapacités personnelles permanentes</h1>
 
           <table id="ipTable">
             <thead>
               <tr>
-                <th>Type</th>
                 <th>Âge consolidation</th>
                 <th>Points</th>
                 <th>%</th>
@@ -114,15 +130,63 @@ const ITP = () => {
             <tbody>
               {rows.map((row, index) => (
                 <tr key={index}>
-                    <td>Personnelle</td>
-                  <td><input type="date" value={row.age} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
-                  <td><input type="date" value={row.points} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
-                  <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
-                  <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <h1>Incapacités ménagères permanentes</h1>
+
+          <table id="ipTable">
+            <thead>
+              <tr>
+                <th>Âge consolidation</th>
+                <th>Points</th>
+                <th>%</th>
+                <th>Contribution (%)</th>
+                <th>Total (€)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, index) => (
+                <tr key={index}>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <h1>Incapacités économiques permanentes</h1>
+
+          <table id="ipTable">
+            <thead>
+              <tr>
+                <th>Âge consolidation</th>
+                <th>Points</th>
+                <th>%</th>
+                  <th>Total (€)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, index) => (
+                <tr key={index}>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
           <div className="total-box">
             <strong>Total : </strong> {getTotalSum()} €
           </div>

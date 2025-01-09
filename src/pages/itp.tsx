@@ -28,18 +28,22 @@ const ITP = () => {
 
   // Fonction pour calculer le nombre de jours et le total pour une ligne donnée
   const calculateRow = (row) => {
-    const { debut, fin, indemnite, pourcentage } = row;
+    const { debut, fin, indemniteitp, pourcentage } = row;
     let jours = "";
     let total = "";
-
+  
     if (debut && fin) {
       const debutDate = new Date(debut);
       const finDate = new Date(fin);
+  
+      // Vérification des dates valides
       if (!isNaN(debutDate) && !isNaN(finDate)) {
-        // Calcul du nombre de jours entre les deux dates
-        jours = Math.max(0, (finDate - debutDate) / (1000 * 60 * 60 * 24));
+        // Calcul du nombre de jours entre les deux dates en tenant compte de la date de début et de fin
+        const timeDiff = finDate.getTime() - debutDate.getTime(); // En millisecondes
+        jours = Math.max(0, timeDiff / (1000 * 3600 * 24)); // Conversion en jours
+  
         // Calcul du total basé sur les jours, indemnité et pourcentage
-        total = (jours * indemnite * (pourcentage / 100)).toFixed(2);
+        total = (jours * indemniteitp * (pourcentage / 100)).toFixed(2);
       }
     }
     return { jours, total };
