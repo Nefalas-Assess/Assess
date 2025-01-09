@@ -6,9 +6,9 @@
 }
 
 #menu {
-    /* position: fixed;
+    position: fixed;
     top: 0;
-    left: 0; */
+    left: 0;
     width: 200px;
     min-width: 200px;
     height: 100%;
@@ -38,22 +38,22 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Commencer en haut de la page */
-    align-items: center; /* Centrer horizontalement */
     flex: 1;
+    padding-left: 220px;
   }
   
   #top-menu {
-    /* position: fixed; */
+    /* position: fixed;*/
     top: 0;
     background-color: #242424;
     padding: 10px;
-    border-bottom: 2px solid black;
+    /* border-bottom: 2px solid black;*/
     display: flex;
     justify-content: space-between;
     left: 0; /* Fixe le top-menu à gauche de l'écran */
     width: 100%; /* Prendre toute la largeur de l'écran */
     z-index: 10; /* Placer le top-menu au-dessus des autres éléments */
-    justify-content: center; /* Centre les éléments horizontalement */
+    justify-content: left; /* Centre les éléments horizontalement */
   }
   
   #top-menu button,
@@ -61,11 +61,17 @@
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
+    /* background-color: #242424; */
+  }
+
+  #top-menu button:hover {
+    background-color: gray;
   }
   
   h1 {
     margin-top: 10;
-    text-align: center; /* Centrer le titre horizontalement */
+    font-size: 24px;
+    text-align: left;
   }
   
   table {

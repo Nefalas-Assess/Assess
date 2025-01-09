@@ -76,6 +76,7 @@ const ITP = () => {
   return (
     <div className="app">
       <div id="menu">
+        <button onClick={() => setCategory("Informations générales")}>Informations générales</button>
         <button onClick={() => setCategory("Incapacité Temporaire Personnelle")}>Incapacité Temporaire Personnelle</button>
         <button onClick={() => setCategory("Incapacité Temporaire Ménagère")}>Incapacité Temporaire Ménagère</button>
         <button onClick={() => setCategory("Incapacité Temporaire Économique")}>Incapacité Temporaire Économique</button>
@@ -102,9 +103,9 @@ const ITP = () => {
           <button onClick={resetData}>Réinitialiser</button>
         </div>
 
-        <h1>{category}</h1>
+        <h1>Incapacités temporaires personnelles</h1>
 
-        <table id="itTable">
+        <table id="itpTable">
           <thead>
             <tr>
               <th>Début</th>
@@ -134,6 +135,89 @@ const ITP = () => {
         <div className="total-box">
           <strong>Total : </strong> {getTotalSum()} €
         </div>
+
+        <h1>Incapacités temporaires ménagères</h1>
+
+        <table id="itmTable">
+          <thead>
+            <tr>
+              <th>Début</th>
+              <th>Fin</th>
+              <th>Jours</th>
+              <th>Indemnité journalière (€)</th>
+              <th>Enfant(s)</th> {/* New column for children */}
+              <th>%</th>
+              <th>Contribution (%)</th> {/* New column for contribution */}
+              <th>Total (€)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, index) => (
+              <tr key={index}>
+                <td><input type="date" value={row.debut} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
+                <td><input type="date" value={row.fin} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
+                <td><input type="number" value={row.jours} readOnly /></td>
+                <td><input type="number" value={row.indemnite} step="0.01" readOnly /></td>
+                <td><input type="number" value={row.enfants} onChange={(e) => handleInputChange(index, 'enfants', parseInt(e.target.value) || 0)} /></td>
+                <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
+                <td><input type="number" value={row.contribution} step="0.01" onChange={(e) => handleInputChange(index, 'contribution', parseFloat(e.target.value))} /></td>
+                <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <button onClick={addRow}>+</button>
+
+        <div className="total-box">
+          <strong>Total : </strong> {getTotalSum()} €
+        </div>
+        
+        <h1>Efforts accrus</h1>
+
+        <table id="effaTable">
+          <thead>
+            <tr>
+              <th>Début</th>
+              <th>Fin</th>
+              <th>Jours</th>
+              <th>Indemnité journalière (€)</th>
+              <th>%</th>
+              <th>Coefficient</th>
+              <th>Total (€)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, index) => (
+              <tr key={index}>
+                <td><input type="date" value={row.debut} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
+                <td><input type="date" value={row.fin} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
+                <td><input type="number" value={row.jours} readOnly /></td>
+                <td><input type="number" value={row.indemnite} step="0.01" onChange={(e) => handleInputChange(index, 'indemnite', parseFloat(e.target.value))} /></td>
+                <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
+                <td>
+                  <select value={row.coefficient} onChange={(e) => handleInputChange(index, 'coefficient', e.target.value)}>
+                    {["1/7", "2/7", "3/7", "4/7", "5/7", "6/7", "7/7"].map((coeff) => (
+                      <option key={coeff} value={coeff}>{coeff}</option>
+                    ))}
+                  </select>
+                </td>
+                <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <button onClick={addRow}>+</button>
+
+        <div className="total-box">
+          <strong>Total : </strong> {getTotalSum()} €
+        </div>
+
+        
+
+
+
       </div>
     </div>
   );
