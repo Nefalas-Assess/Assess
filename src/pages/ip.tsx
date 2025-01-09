@@ -107,7 +107,10 @@ const ITP = () => {
     window.location.reload(); // Recharge la page pour restaurer l'état React
   };
 
-  console.log(data?.general_info?.date_consolidation)
+  console.log(data?.general_info)
+  const ageconso = data?.general_info?.date_naissance - data?.general_info?.date_consolidation;
+
+  console.log(ageconso)
 
   return (
       <div id="content">
