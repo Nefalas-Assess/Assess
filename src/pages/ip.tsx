@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import '../style.css';
 import { AppContext } from "../Provider";
+import { intervalToDuration } from "date-fns";
 
 const ITP = () => {
   const { data } = useContext(AppContext)
@@ -107,10 +108,7 @@ const ITP = () => {
     window.location.reload(); // Recharge la page pour restaurer l'état React
   };
 
-  console.log(data?.general_info)
-  const ageconso = data?.general_info?.date_naissance - data?.general_info?.date_consolidation;
-
-  console.log(ageconso)
+  const { years: age_consolidation } = intervalToDuration({ start: data?.general_info?.date_naissance, end: data?.general_info?.date_consolidation });
 
   return (
       <div id="content">
@@ -138,7 +136,7 @@ const ITP = () => {
             <tbody>
               {rows.map((row, index) => (
                 <tr key={index}>
-                  <td></td>
+                  <td>{age_consolidation}</td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -162,7 +160,7 @@ const ITP = () => {
             <tbody>
               {rows.map((row, index) => (
                 <tr key={index}>
-                  <td></td>
+                  <td>{age_consolidation}</td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -186,7 +184,7 @@ const ITP = () => {
             <tbody>
               {rows.map((row, index) => (
                 <tr key={index}>
-                  <td></td>
+                  <td>{age_consolidation}</td>
                   <td></td>
                   <td></td>
                   <td></td>

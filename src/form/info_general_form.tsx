@@ -12,11 +12,13 @@ const InfoForm = ({onSubmit, initialValues}) => {
     profession: 'employe', // Default value
   });
 
+  
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: type === 'date' ? new Date(value) : value, // Convert 'date' input to JS Date
     }));
   };
 
@@ -28,97 +30,113 @@ const InfoForm = ({onSubmit, initialValues}) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <table id="infogTable">
+        <table id="infogTable">
         <tbody>
-          <tr>
+            <tr>
             <td>Date de création/màj</td>
             <td>
-              <input
+                <input
                 type="date"
                 name="creation_maj_date"
-                value={formData.creation_maj_date}
+                value={
+                    formData.creation_maj_date
+                    ? formData.creation_maj_date.toISOString().split('T')[0]
+                    : ''
+                }
                 onChange={handleChange}
-              />
+                />
             </td>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
             <td>Référence du dossier</td>
             <td>
-              <input
+                <input
                 type="text"
                 name="reference_dossier"
                 size="30"
                 value={formData.reference_dossier}
                 onChange={handleChange}
-              />
+                />
             </td>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
             <td>Nom de la victime</td>
             <td>
-              <input
+                <input
                 type="text"
                 name="nom_victime"
                 size="30"
                 value={formData.nom_victime}
                 onChange={handleChange}
-              />
+                />
             </td>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
             <td>Date de l'accident</td>
             <td>
-              <input
+                <input
                 type="date"
                 name="date_accident"
-                value={formData.date_accident}
+                value={
+                    formData.date_accident
+                    ? formData.date_accident.toISOString().split('T')[0]
+                    : ''
+                }
                 onChange={handleChange}
-              />
+                />
             </td>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
             <td>Date de naissance</td>
             <td>
-              <input
+                <input
                 type="date"
                 name="date_naissance"
-                value={formData.date_naissance}
+                value={
+                    formData.date_naissance
+                    ? formData.date_naissance.toISOString().split('T')[0]
+                    : ''
+                }
                 onChange={handleChange}
-              />
+                />
             </td>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
             <td>Date de consolidation</td>
             <td>
-              <input
+                <input
                 type="date"
                 name="date_consolidation"
-                value={formData.date_consolidation}
+                value={
+                    formData.date_consolidation
+                    ? formData.date_consolidation.toISOString().split('T')[0]
+                    : ''
+                }
                 onChange={handleChange}
-              />
+                />
             </td>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
             <td>Statut</td>
             <td>
-              <select
+                <select
                 name="statut"
                 value={formData.statut}
                 onChange={handleChange}
-              >
+                >
                 <option value="marié">Marié</option>
                 <option value="célibataire">Célibataire</option>
-              </select>
+                </select>
             </td>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
             <td>Profession</td>
             <td>
-              <select
+                <select
                 name="profession"
                 value={formData.profession}
                 onChange={handleChange}
-              >
+                >
                 <option value="employe">Employé</option>
                 <option value="ouvrier">Ouvrier</option>
                 <option value="sans_emploi">Sans emploi</option>
@@ -126,12 +144,12 @@ const InfoForm = ({onSubmit, initialValues}) => {
                 <option value="independant">Indépendant</option>
                 <option value="fonctionnaire">Fonctionnaire</option>
                 <option value="invalide">Invalide</option>
-              </select>
+                </select>
             </td>
-          </tr>
+            </tr>
         </tbody>
-      </table>
-      <button type="submit">Submit</button>
+        </table>
+        <button type="submit">Save</button>
     </form>
   );
 };
