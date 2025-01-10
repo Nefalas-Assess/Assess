@@ -3,6 +3,7 @@ import EFFA from './pages/effa.tsx'
 import IP from './pages/ip.tsx'
 import ITM from './pages/itm.tsx'
 import ITP from './pages/itp.tsx'
+import ITE from './pages/ite.tsx'
 import INFOG from './pages/infog.tsx'
 import { BrowserRouter, NavLink, Outlet, Route, Routes } from 'react-router'
 import AppProvider, { AppContext } from './Provider.tsx'
@@ -74,16 +75,19 @@ const Layout = () => {
               Informations générales
             </NavLink>
             <NavLink to="/itp">
-              Incapacité Temporaire Personnelle
+              Incapacités Temporaires Personnelles
             </NavLink>
             <NavLink to="/itm">
-              Incapacité Temporaire Ménagère
+              Incapacités Temporaires Ménagères
+            </NavLink>
+            <NavLink to="/ite">
+              Incapacités Temporaires Économiques
             </NavLink>
             <NavLink to="/effa">
               Efforts Accrus
             </NavLink>
             <NavLink to="/ip">
-              Incapacité Permanente
+              Incapacités Permanentes Forfaitaires
             </NavLink>
           </div>
           <div className='content'>

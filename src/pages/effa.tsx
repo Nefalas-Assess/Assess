@@ -65,6 +65,11 @@ const EFFA = () => {
     setRows([...rows, newRow]);
   };
 
+  const removeRow = (index) => {
+    const updatedRows = rows.filter((_, i) => i !== index);
+    setRows(updatedRows);
+  };
+
   // Fonction pour gérer les changements dans les champs d'entrée
   // Met à jour les valeurs dans l'état `rows` et recalcul le total
   const handleInputChange = (index, field, value) => {
@@ -90,12 +95,9 @@ const EFFA = () => {
 
   return (
       <div id="content">
-        <div id="top-menu">
-          <button onClick={() => { /* saveData logic */ }}>Sauvegarder</button>
-          <input type="file" id="loadFileInput" style={{ display: 'none' }} onChange={() => { /* loadData logic */ }} />
-          <button onClick={() => document.getElementById('loadFileInput').click()}>Charger</button>
-          <button onClick={resetData}>Réinitialiser</button>
-        </div>
+      <div id="top-menu">
+        <button onClick={resetData}>Réinitialiser</button>
+      </div>
 
         <div id="main">
           <h1>Efforts accrus</h1>
@@ -128,12 +130,11 @@ const EFFA = () => {
                     </select>
                   </td>
                   <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
+                  <td><button onClick={addRow}>+</button><button onClick={() => removeRow(index)}>-</button></td>
                 </tr>
               ))}
             </tbody>
           </table>
-
-          <button onClick={addRow}>+</button>
 
           <div className="total-box">
             <strong>Total : </strong> {getTotalSum()} €

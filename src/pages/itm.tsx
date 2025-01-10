@@ -73,6 +73,11 @@ const ITM = () => {
     setRows([...rows, newRow]);
   };
 
+  const removeRow = (index) => {
+    const updatedRows = rows.filter((_, i) => i !== index);
+    setRows(updatedRows);
+  };
+  
   // Fonction pour gérer les changements dans les champs d'entrée
   // Met à jour les valeurs dans l'état `rows` et recalcul le total
   const handleInputChange = (index, field, value) => {
@@ -105,9 +110,6 @@ const ITM = () => {
 
       <div id="content">
         <div id="top-menu">
-          <button onClick={() => { /* saveData logic */ }}>Sauvegarder</button>
-          <input type="file" id="loadFileInput" style={{ display: 'none' }} onChange={() => { /* loadData logic */ }} />
-          <button onClick={() => document.getElementById('loadFileInput').click()}>Charger</button>
           <button onClick={resetData}>Réinitialiser</button>
         </div>
 
@@ -118,8 +120,8 @@ const ITM = () => {
                     <th>Début</th>
                     <th>Fin</th>
                     <th>Jours</th>
-                    <th>Indemnité journalière (€)</th>
                     <th>Enfant(s)</th>
+                    <th>Indemnité journalière (€)</th>
                     <th>%</th>
                     <th>Contribution (%)</th>
                     <th>Total (€)</th>
@@ -131,8 +133,8 @@ const ITM = () => {
                       <td><input type="date" value={row.debut} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
                       <td><input type="date" value={row.fin} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
                       <td><input type="number" value={row.jours} readOnly /></td>
-                      <td><input type="number" value={row.indemniteitm} step="0.01" readOnly /></td>
                       <td><input type="number" value={row.enfants} onChange={(e) => handleInputChange(index, 'enfants', parseInt(e.target.value) || 0)} /></td>
+                      <td><input type="number" value={row.indemniteitm} step="0.01" readOnly /></td>
                       <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
                       <td>
                         <select 
@@ -147,13 +149,12 @@ const ITM = () => {
                         </select>
                       </td>
                       <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
+                      <td><button onClick={addRow}>+</button><button onClick={() => removeRow(index)}>-</button></td>
                     </tr>
                   ))}
 
                 </tbody>
             </table>
-
-            <button onClick={addRow}>+</button>
 
             <div className="total-box">
                 <strong>Total : </strong> {getTotalSum()} €

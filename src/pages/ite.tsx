@@ -98,8 +98,6 @@ const ITP = () => {
   };
 
   return (
-   
-
       <div id="content">
         <div id="top-menu">
           <button onClick={resetData}>Réinitialiser</button>
@@ -107,15 +105,15 @@ const ITP = () => {
 
         <div id="main">
 
-          <h1>Incapacités temporaires personnelles</h1>
+          <h1>Incapacités temporaires économiques</h1>
 
-          <table id="itpTable">
+          <table id="iteTable">
             <thead>
               <tr>
                 <th>Début</th>
                 <th>Fin</th>
                 <th>Jours</th>
-                <th>Indemnité journalière (€)</th>
+                <th>Salaire annuel brut (€)</th>
                 <th>%</th>
                 <th>Total (€)</th>
                 <th></th>
@@ -127,7 +125,7 @@ const ITP = () => {
                   <td><input type="date" value={row.debut} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
                   <td><input type="date" value={row.fin} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
                   <td><input type="number" value={row.jours} readOnly /></td>
-                  <td><input type="number" value={row.indemniteitp} step="0.01" onChange={(e) => handleInputChange(index, 'indemnite', parseFloat(e.target.value))} /></td>
+                  <td><input type="number" value={row.salairebrut} step="0.01" onChange={(e) => handleInputChange(index, 'salairebrut', parseFloat(e.target.value))} /></td>
                   <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
                   <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
                   <td><button onClick={addRow}>+</button><button onClick={() => removeRow(index)}>-</button></td>
