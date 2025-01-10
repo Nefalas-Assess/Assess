@@ -110,6 +110,8 @@ const ITP = () => {
 
   const { years: age_consolidation } = intervalToDuration({ start: data?.general_info?.date_naissance, end: data?.general_info?.date_consolidation });
 
+  console.log(data)
+
   return (
       <div id="content">
         <div id="top-menu">

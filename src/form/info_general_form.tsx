@@ -79,7 +79,7 @@ const InfoForm = ({onSubmit, initialValues}) => {
                 name="date_accident"
                 value={
                     formData.date_accident
-                    ? formData.date_accident.toISOString().split('T')[0]
+                    ? new Date(formData.date_accident).toISOString().split('T')[0]
                     : ''
                 }
                 onChange={handleChange}
@@ -94,7 +94,7 @@ const InfoForm = ({onSubmit, initialValues}) => {
                 name="date_naissance"
                 value={
                     formData.date_naissance
-                    ? formData.date_naissance.toISOString().split('T')[0]
+                    ? new Date(formData.date_naissance).toISOString().split('T')[0]
                     : ''
                 }
                 onChange={handleChange}
@@ -109,7 +109,7 @@ const InfoForm = ({onSubmit, initialValues}) => {
                 name="date_consolidation"
                 value={
                     formData.date_consolidation
-                    ? formData.date_consolidation.toISOString().split('T')[0]
+                    ? new Date(formData.date_consolidation).toISOString().split('T')[0]
                     : ''
                 }
                 onChange={handleChange}

@@ -1,3 +1,4 @@
+import { intervalToDuration } from 'date-fns';
 import React, { createContext, useCallback, useState } from 'react';
 
 export const AppContext = createContext();
@@ -7,9 +8,21 @@ const initial = {};
 const AppProvider = ({ children }) => {
   const [data, setData] = useState(initial);
 
+  const computeData = useCallback((res) => {
+    if(res?.general_info){
+      const { years: age_consolidation } = intervalToDuration({ start: res?.general_info?.date_naissance, end: res?.general_info?.date_consolidation });
+      res.computed_info = {
+        age_consolidation,
+      }
+    }
+    return res;
+  },[])
+
   const storeData = useCallback((res) => {
-    setData((prev) => ({ ...prev, ...res }));
-  }, []);
+    const result = computeData(res);
+
+    setData((prev) => ({ ...prev, ...result }));
+  }, [computeData]);
 
   const resetData = useCallback(() => {
     setData(initial);
