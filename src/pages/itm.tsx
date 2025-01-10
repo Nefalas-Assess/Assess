@@ -8,7 +8,7 @@ const ITM = () => {
     fin: "",           // Date de fin par défaut
     jours: "",         // Nombre de jours calculé automatiquement
     indemniteitp: 32,     // Indemnité journalière par défaut
-    indemniteitm: 30,
+    indemniteitm: "",
     pourcentage: "",   // Pourcentage d'application
     total: "",         // Total calculé automatiquement
   });
@@ -28,10 +28,14 @@ const ITM = () => {
 
   // Fonction pour calculer le nombre de jours et le total pour une ligne donnée
   const calculateRow = (row) => {
-    const { debut, fin, indemnite, pourcentage } = row;
+    const { debut, fin, enfants, pourcentage, contribution } = row;
     let jours = "";
+    let indemniteitm = 30; // Valeur de base pour indemniteitm
     let total = "";
-
+  
+    // Calcul de l'indemnité journalière en fonction du nombre d'enfants
+    indemniteitm += (enfants || 0) * 10;
+  
     if (debut && fin) {
       const debutDate = new Date(debut);
       const finDate = new Date(fin);
@@ -39,11 +43,15 @@ const ITM = () => {
         // Calcul du nombre de jours entre les deux dates
         jours = Math.max(0, (finDate - debutDate) / (1000 * 60 * 60 * 24));
         // Calcul du total basé sur les jours, indemnité et pourcentage
-        total = (jours * indemnite * (pourcentage / 100)).toFixed(2);
+        total = (
+          jours * indemniteitm * (pourcentage / 100 || 0) * (contribution / 100 || 0)
+        ).toFixed(2);
       }
     }
-    return { jours, total };
+  
+    return { jours, indemniteitm, total };
   };
+  
 
   // Fonction pour ajouter une nouvelle ligne dans le tableau
   const addRow = () => {
@@ -70,9 +78,13 @@ const ITM = () => {
   const handleInputChange = (index, field, value) => {
     const updatedRows = [...rows];
     updatedRows[index][field] = value; // Met à jour la valeur du champ modifié
-    const { jours, total } = calculateRow(updatedRows[index]); // Recalcule les champs dérivés
+  
+    // Recalcule les champs dérivés
+    const { jours, indemniteitm, total } = calculateRow(updatedRows[index]);
     updatedRows[index].jours = jours;
+    updatedRows[index].indemniteitm = indemniteitm;
     updatedRows[index].total = total;
+  
     setRows(updatedRows);
   };
 
@@ -116,16 +128,28 @@ const ITM = () => {
                 <tbody>
                 {rows.map((row, index) => (
                     <tr key={index}>
-                    <td><input type="date" value={row.debut} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
-                    <td><input type="date" value={row.fin} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
-                    <td><input type="number" value={row.jours} readOnly /></td>
-                    <td><input type="number" value={row.indemniteitm} step="0.01" readOnly /></td>
-                    <td><input type="number" value={row.enfants} onChange={(e) => handleInputChange(index, 'enfants', parseInt(e.target.value) || 0)} /></td>
-                    <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
-                    <td><input type="number" value={row.contribution} step="0.01" onChange={(e) => handleInputChange(index, 'contribution', parseFloat(e.target.value))} /></td>
-                    <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
+                      <td><input type="date" value={row.debut} onChange={(e) => handleInputChange(index, 'debut', e.target.value)} /></td>
+                      <td><input type="date" value={row.fin} onChange={(e) => handleInputChange(index, 'fin', e.target.value)} /></td>
+                      <td><input type="number" value={row.jours} readOnly /></td>
+                      <td><input type="number" value={row.indemniteitm} step="0.01" readOnly /></td>
+                      <td><input type="number" value={row.enfants} onChange={(e) => handleInputChange(index, 'enfants', parseInt(e.target.value) || 0)} /></td>
+                      <td><input type="number" value={row.pourcentage} step="0.01" onChange={(e) => handleInputChange(index, 'pourcentage', parseFloat(e.target.value))} /></td>
+                      <td>
+                        <select 
+                          value={row.contribution} 
+                          onChange={(e) => handleInputChange(index, 'contribution', parseInt(e.target.value))}
+                        >
+                          <option value="0">0</option>
+                          <option value="100">100</option>
+                          <option value="65">65</option>
+                          <option value="50">50</option>
+                          <option value="35">35</option>
+                        </select>
+                      </td>
+                      <td><input type="number" value={row.total} readOnly onKeyDown={(e) => handleKeyDown(index, e)} /></td>
                     </tr>
-                ))}
+                  ))}
+
                 </tbody>
             </table>
 
